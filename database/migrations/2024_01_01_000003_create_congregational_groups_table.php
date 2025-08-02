@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('congregational_groups', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->comment('Name of the congregational group');
+            $table->text('description')->nullable()->comment('Description of the group');
+            $table->json('schedule')->nullable()->comment('JSON array of schedule information');
+            $table->boolean('is_active')->default(true)->comment('Whether the group is currently active');
+            $table->timestamps();
+            
+            $table->index('name');
+            $table->index('is_active');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('congregational_groups');
+    }
+};
